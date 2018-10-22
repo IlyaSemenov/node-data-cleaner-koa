@@ -19,33 +19,33 @@ Consider a registration form:
 ```vue
 <template>
 <form ref="form" @submit.prevent="submit">
-	Login: <input name="username" required>
-	Password: <input name="password" type="password" required>
-	Company name: <input name="company.name" required>
-	Domain: <input name="company.domain" required>.mysaas.com
-	<button>Register</button>
-	errors = {{ errors }}
+  Login: <input name="username" required>
+  Password: <input name="password" type="password" required>
+  Company name: <input name="company.name" required>
+  Domain: <input name="company.domain" required>.mysaas.com
+  <button>Register</button>
+  errors = {{ errors }}
 </form>
 </template>
 
 <script>
 export default {
-	data () {
-		return {
-			errors: null,
-		}
-	},
-	methods: {
-		async submit () {
-			this.errors = null
-			const { data } = await this.$axios.post('/register', new FormData(this.$refs.form))
-			if (data.errors) {
-				this.errors = data.errors
-			} else {
-				await this.$store.dispatch('login', data.user)
-			}
-		},
-	},
+  data () {
+    return {
+      errors: null,
+    }
+  },
+  methods: {
+    async submit () {
+      this.errors = null
+      const { data } = await this.$axios.post('/register', new FormData(this.$refs.form))
+      if (data.errors) {
+        this.errors = data.errors
+      } else {
+        await this.$store.dispatch('login', data.user)
+      }
+    },
+  },
 }
 </script>
 ```
@@ -57,51 +57,51 @@ import clean from 'data-cleaner'
 import cleanKoa from 'data-cleaner-koa'
 
 const cleanRegister = cleanKoa({
-	body: clean.object({
-		parseKeys: true,
-		fields: {
-			username: clean.string({
-				async clean (username: string) {
-					const user = await User.query().select('id').where('username', username).first()
-					if (user) {
-						throw new clean.ValidationError('This username is not available.')
-					}
-					return username
-				},
-			}),
-			password: clean.string(),
-			company: clean.object({
-				fields: {
-					name: clean.string(),
-					domain: clean.string({
-						async clean (domain: string) {
-							domain = domain.toLowerCase()
-							if (
-								domain.match(/^(www|mail|admin)/) ||
-								await Company.query().select('id').where('domain', domain).first()
-							) {
-								throw new clean.ValidationError('This domain is not available.')
-							}
-							return domain
-						},
-					}),
-				},
-			}),
-		},
-	}),
+  body: clean.object({
+    parseKeys: true,
+    fields: {
+      username: clean.string({
+        async clean (username: string) {
+          const user = await User.query().select('id').where('username', username).first()
+          if (user) {
+            throw new clean.ValidationError('This username is not available.')
+          }
+          return username
+        },
+      }),
+      password: clean.string(),
+      company: clean.object({
+        fields: {
+          name: clean.string(),
+          domain: clean.string({
+            async clean (domain: string) {
+              domain = domain.toLowerCase()
+              if (
+                domain.match(/^(www|mail|admin)/) ||
+                await Company.query().select('id').where('domain', domain).first()
+              ) {
+                throw new clean.ValidationError('This domain is not available.')
+              }
+              return domain
+            },
+          }),
+        },
+      }),
+    },
+  }),
 })
 
 router.post('/register', async ctx => {
-	const { body } = await cleanRegister(ctx)
-	const user = await User.query().upsertGraphAndFetch({
-		username: body.username, // will be unique (*)
-		password: body.password,
-		company: {
-			name: body.company.name,
-			domain: body.company.domain, // will be lowercase
-		},
-	}),
-	ctx.body = user
+  const { body } = await cleanRegister(ctx)
+  const user = await User.query().upsertGraphAndFetch({
+    username: body.username, // will be unique (*)
+    password: body.password,
+    company: {
+      name: body.company.name,
+      domain: body.company.domain, // will be lowercase
+    },
+  }),
+  ctx.body = user
 })
 ```
 
@@ -113,11 +113,11 @@ In the example above, `cleanKoa` will accept optional return value interface:
 
 ```ts
 interface RegisterFields extends Pick<IUser, 'username' | 'password'> {
-	company: Pick<ICompany, 'domain'>
+  company: Pick<ICompany, 'domain'>
 }
 
 const cleanRegister = cleanKoa<RegisterFields>({
-	...
+  ...
 })
 
 const { body } = await cleanRegister(ctx) // body is a RegisterFields object
