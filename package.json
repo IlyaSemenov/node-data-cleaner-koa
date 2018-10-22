@@ -1,0 +1,44 @@
+{
+  "name": "data-cleaner-koa",
+  "version": "0.0.1",
+  "description": "Koa.js plugin for node-data-cleaner",
+  "main": "dist/bundle.umd.js",
+  "source": "src/index.ts",
+  "files": [
+    "src/**",
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IlyaSemenov/node-data-cleaner-koa.git"
+  },
+  "keywords": [
+    "validation",
+    "koa"
+  ],
+  "author": "Ilya Semenov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IlyaSemenov/node-data-cleaner-koa/issues"
+  },
+  "homepage": "https://github.com/IlyaSemenov/node-data-cleaner-koa#readme",
+  "dependencies": {
+    "http-errors": "^1"
+  },
+  "peerDependencies": {
+    "data-cleaner": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.46",
+    "data-cleaner": "^1.1.0",
+    "formidable": "^1.2.1",
+    "koa-body": "^4.0.4",
+    "rollup": "^0.66.6",
+    "rollup-plugin-typescript2": "^0.17.1",
+    "typescript": "^3.1.3"
+  }
+}
