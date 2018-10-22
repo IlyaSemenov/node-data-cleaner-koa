@@ -6,11 +6,11 @@ It will return cleaned `body` and `files`, and throw a Koa HTTP error response w
 
 ## Schema options
 
-The cleaner is derived from [`clean.any`](https://github.com/IlyaSemenov/node-data-cleaner#cleanany) with the following new options:
+The cleaner creator accepts the following schema options:
 
-* **body**: body cleaner (optional)
-* **files**: files cleaner (optional)
-* **errorCode**: HTTP status code for the failed validation response (default: 200)
+* `body`: body cleaner (optional)
+* `files`: files cleaner (optional)
+* `errorCode`: HTTP status code for the failed validation response (default: 200)
 
 ## Example
 
@@ -109,11 +109,11 @@ router.post('/register', async ctx => {
 
 ## Typescript
 
-In the example above, `cleanKoa` will accept optional return value interface:
+In the example above, `cleanKoa` will accept optional return value interface for body fields:
 
 ```ts
 interface RegisterFields extends Pick<IUser, 'username' | 'password'> {
-  company: Pick<ICompany, 'domain'>
+  company: Pick<ICompany, 'name' | 'domain'>
 }
 
 const cleanRegister = cleanKoa<RegisterFields>({
@@ -122,3 +122,5 @@ const cleanRegister = cleanKoa<RegisterFields>({
 
 const { body } = await cleanRegister(ctx) // body is a RegisterFields object
 ```
+
+The `files` are currently untyped.
