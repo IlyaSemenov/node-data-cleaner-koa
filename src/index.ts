@@ -13,15 +13,15 @@ export interface KoaSchema<T> {
 }
 
 export interface CleanedKoaRequest<T> {
-	body?: T
-	files?: formidable.Files
+	body: T
+	files: formidable.Files
 }
 
 export default function clean_koa<T = any> (schema: KoaSchema<T>): Cleaner<CleanedKoaRequest<T>> {
 	return clean.any<CleanedKoaRequest<T>>({
 		async clean (ctx: Koa.Context, opts) {
 			try {
-				let res: CleanedKoaRequest<T> = {}
+				let res = {} as CleanedKoaRequest<T>
 				if (schema.body) {
 					res.body = await schema.body(ctx.request.body, opts)
 				}

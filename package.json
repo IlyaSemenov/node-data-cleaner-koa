@@ -1,6 +1,6 @@
 {
   "name": "data-cleaner-koa",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Koa.js plugin for node-data-cleaner",
   "main": "dist/bundle.umd.js",
   "types": "dist/index.d.ts",
