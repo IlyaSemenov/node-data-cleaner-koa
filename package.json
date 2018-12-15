@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "echo No tests so far."
   },
   "repository": {
     "type": "git",
