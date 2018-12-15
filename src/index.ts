@@ -34,9 +34,17 @@ export default function clean_koa<T = any> (schema: KoaSchema<T>): Cleaner<Clean
 				return res
 			} catch (err) {
 				if (err instanceof clean.ValidationError) {
-					const http_error = createError(400, JSON.stringify({ errors: err.errors }))
+					const http_error = createError(
+						400,
+						JSON.stringify({ errors: err.errors }),
+						{
+							headers: { 'Content-Type': 'application/json' }
+						}
+					)
 					// avoid createError deprecation warning for status < 400
 					http_error.status = schema.errorCode || 200
+					// prevent Koa from resetting content-type, see https://github.com/koajs/koa/issues/787
+					Object.defineProperty(ctx.response, 'type', { set () {} })
 					throw http_error
 				}
 				throw err
