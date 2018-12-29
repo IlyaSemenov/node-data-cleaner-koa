@@ -1,27 +1,26 @@
 import Koa from 'koa'
 import 'koa-body' // pull typings
-import clean from 'data-cleaner'
-import { Cleaner } from 'data-cleaner/src/types'
+import clean, { Cleaner } from 'data-cleaner'
 import createError from 'http-errors'
 import formidable from 'formidable'
 
-export interface KoaSchema<T> {
-	body?: Cleaner<T>
+export interface KoaSchema<B, T> {
+	body?: Cleaner<B, any> // TODO: any -> type of ctx.request.body
 	files?: Cleaner
-	clean?: Cleaner<CleanedKoaRequest<T>>
+	clean?: Cleaner<T, Koa.Context>
 	errorCode?: number
 }
 
-export interface CleanedKoaRequest<T> {
-	body: T
-	files: formidable.Files
+export interface CleanKoaRequest<B> {
+	body?: B
+	files?: formidable.Files
 }
 
-export default function clean_koa<T = any> (schema: KoaSchema<T>): Cleaner<CleanedKoaRequest<T>> {
-	return clean.any<CleanedKoaRequest<T>>({
-		async clean (ctx: Koa.Context, opts) {
+export default function clean_koa<B = any, T = CleanKoaRequest<B>> (schema: KoaSchema<B, T>): Cleaner<T, Koa.Context> {
+	return clean.any<T, Koa.Context>({
+		async clean (ctx, opts) {
 			try {
-				let res = {} as CleanedKoaRequest<T>
+				let res: any = {}
 				if (schema.body) {
 					res.body = await schema.body(ctx.request.body, opts)
 				}

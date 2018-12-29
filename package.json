@@ -32,11 +32,11 @@
     "http-errors": "^1"
   },
   "peerDependencies": {
-    "data-cleaner": "^1.1.0"
+    "data-cleaner": "^1.2.0"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",
-    "data-cleaner": "^1.1.0",
+    "data-cleaner": "^1.2.0",
     "formidable": "^1.2.1",
     "koa-body": "^4.0.4",
     "rollup": "^0.66.6",
