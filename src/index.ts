@@ -12,8 +12,8 @@ export interface KoaSchema<B, T> {
 }
 
 export interface CleanKoaRequest<B> {
-	body?: B
-	files?: formidable.Files
+	body: B
+	files: formidable.Files // TODO: allow this to be optional
 }
 
 export default function clean_koa<B = any, T = CleanKoaRequest<B>> (schema: KoaSchema<B, T>): Cleaner<T, Koa.Context> {
