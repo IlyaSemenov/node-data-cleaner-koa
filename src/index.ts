@@ -35,7 +35,7 @@ export default function clean_koa<B = any, T = CleanKoaRequest<B>> (schema: KoaS
 				if (err instanceof clean.ValidationError) {
 					const http_error = createError(
 						400,
-						JSON.stringify({ errors: err.errors }),
+						JSON.stringify({ errors: err.messages || err.errors }),
 						{
 							headers: { 'Content-Type': 'application/json' }
 						}
