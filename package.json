@@ -40,6 +40,7 @@
     "formidable": "^1.2.1",
     "koa-body": "^4.1.0",
     "rollup": "^1.11.3",
+    "rollup-plugin-cleaner": "^0.2.0",
     "rollup-plugin-typescript2": "^0.21.0",
     "semantic-release": "^15.13.3",
     "typescript": "^3.4.5"
