@@ -1,6 +1,7 @@
 import Koa from 'koa'
 import 'koa-body' // pull typings
-import clean, { Cleaner } from 'data-cleaner'
+import * as clean from 'data-cleaner'
+import { Cleaner } from 'data-cleaner'
 import createError from 'http-errors'
 import formidable from 'formidable'
 
@@ -50,4 +51,8 @@ export default function clean_koa<B = any, T = CleanKoaRequest<B>> (schema: KoaS
 			}
 		},
 	})
+}
+
+declare module "data-cleaner" {
+	export const koa: typeof clean_koa
 }

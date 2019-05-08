@@ -38,7 +38,10 @@ export default {
   methods: {
     async submit () {
       this.errors = null
-      const { data } = await this.$axios.post('/register', new FormData(this.$refs.form))
+      const { data } = await this.$axios.post(
+        '/register',
+        new FormData(this.$refs.form)
+      )
       if (data.errors) {
         this.errors = data.errors
       } else {
@@ -53,10 +56,10 @@ export default {
 and the corresponding backend:
 
 ```js
-import clean from 'data-cleaner'
-import cleanKoa from 'data-cleaner-koa'
+import * as clean from 'data-cleaner'
+import 'data-cleaner-koa' // injects into data-cleaner
 
-const cleanRegister = cleanKoa({
+const cleanRegister = clean.koa({
   body: clean.object({
     parseKeys: true,
     fields: {
@@ -116,7 +119,7 @@ interface RegisterFields extends Pick<IUser, 'username' | 'password'> {
   company: Pick<ICompany, 'name' | 'domain'>
 }
 
-const cleanRegister = cleanKoa<RegisterFields>({
+const cleanRegister = clean.koa<RegisterFields>({
   ...
 })
 
