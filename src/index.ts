@@ -53,6 +53,8 @@ export default function clean_koa<B = any, T = CleanKoaRequest<B>> (schema: KoaS
 	})
 }
 
+require('data-cleaner').koa = clean_koa
+
 declare module "data-cleaner" {
 	export const koa: typeof clean_koa
 }
