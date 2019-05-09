@@ -5,20 +5,25 @@ import { Cleaner } from 'data-cleaner'
 import createError from 'http-errors'
 import formidable from 'formidable'
 
-export interface KoaSchema<B, T> {
-	body?: Cleaner<B, any> // TODO: any -> type of ctx.request.body
+export interface KoaSchema<BodyT, ReturnT> {
+	body?: Cleaner<BodyT, any> // TODO: any -> type of ctx.request.body
 	files?: Cleaner
-	clean?: Cleaner<T, Koa.Context>
+	clean?: Cleaner<ReturnT, CleanKoaRequest<BodyT>>
 	errorCode?: number
 }
 
-export interface CleanKoaRequest<B> {
-	body: B
+export interface CleanKoaRequest<BodyT> {
+	body: BodyT
 	files: formidable.Files // TODO: allow this to be optional
 }
 
-export default function clean_koa<B = any, T = CleanKoaRequest<B>> (schema: KoaSchema<B, T>): Cleaner<T, Koa.Context> {
-	return clean.any<T, Koa.Context>({
+export default function clean_koa<
+	BodyT = any,
+	StateT = any,
+	ContextT extends Koa.ParameterizedContext<StateT> = Koa.ParameterizedContext<StateT>,
+	ReturnT = CleanKoaRequest<BodyT>
+> (schema: KoaSchema<BodyT, ReturnT>): Cleaner<ReturnT, ContextT> {
+	return clean.any<ReturnT, ContextT>({
 		async clean (ctx, opts) {
 			try {
 				let res: any = {}
