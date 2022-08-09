@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This repository was moved to monorepo at [node-data-cleaner](https://github.com/IlyaSemenov/node-data-cleaner).
+
 # data-cleaner-koa
 
 This is a plugin for [node-data-cleaner](https://github.com/IlyaSemenov/node-data-cleaner) for *cleaning* Koa.js requests (or more precisely, for `koa-body@4` requests).
