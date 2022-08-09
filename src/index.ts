@@ -39,7 +39,7 @@ export default function clean_koa<
 				return res
 			} catch (err) {
 				if (err instanceof clean.ValidationError) {
-					const http_error = createError(
+					const http_error = createError<number>(
 						400,
 						JSON.stringify({ errors: err.messages || err.errors }),
 						{

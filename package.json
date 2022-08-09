@@ -2,7 +2,14 @@
   "name": "data-cleaner-koa",
   "version": "0.0.0-development",
   "description": "Koa.js plugin for node-data-cleaner",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IlyaSemenov/node-data-cleaner-koa.git"
+  },
+  "author": "Ilya Semenov",
+  "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
   "files": [
@@ -10,24 +17,10 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "prepublish": "npm run build",
+    "build": "tsup",
+    "prepack": "npm run build",
     "test": "echo No tests so far."
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/IlyaSemenov/node-data-cleaner-koa.git"
-  },
-  "keywords": [
-    "validation",
-    "koa"
-  ],
-  "author": "Ilya Semenov",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/IlyaSemenov/node-data-cleaner-koa/issues"
-  },
-  "homepage": "https://github.com/IlyaSemenov/node-data-cleaner-koa#readme",
   "dependencies": {
     "http-errors": "^1.7.2"
   },
@@ -35,14 +28,14 @@
     "data-cleaner": "^3.0.0"
   },
   "devDependencies": {
+    "@tsconfig/node14": "^1.0.3",
+    "@types/http-errors": "^1.8.2",
     "@types/koa": "^2.0.48",
     "data-cleaner": "^3.0.0",
     "formidable": "^1.2.1",
     "koa-body": "^4.1.0",
-    "rollup": "^1.11.3",
-    "rollup-plugin-cleaner": "^0.2.0",
-    "rollup-plugin-typescript2": "^0.21.0",
     "semantic-release": "^15.13.3",
-    "typescript": "^3.4.5"
+    "tsup": "^6.2.1",
+    "typescript": "^4.7.4"
   }
 }
